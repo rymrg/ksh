@@ -56,6 +56,9 @@ New features in built-in commands:
   Note that to use these options the operating system must support the
   corresponding resource limit.
 
+- 'typeset' has a new '-g' flag that forces variables to be created or
+  modified at the global scope regardless of context, as on bash 4.2+.
+
 New command line editor features:
 
 - Various keys on extended PC keyboards are now handled as expected in the
