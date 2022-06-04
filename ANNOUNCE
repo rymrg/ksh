@@ -70,6 +70,12 @@ New command line editor features:
 
 New features in shell options:
 
+- A new --functrace long-form shell option causes the -x/--xtrace option's
+  state and the DEBUG trap action to be inherited by function scopes instead
+  of being reset to default. Changes made to them within a function scope
+  still do not propagate back to the parent scope. Similarly, this option
+  also causes the DEBUG trap action to be inherited by subshells.
+
 - The new --histreedit and --histverify options modify history expansion
   (--histexpand). If --histreedit is on and a history expansion fails, the
   command line is reloaded into the next prompt's edit buffer, allowing
