@@ -3,6 +3,11 @@ For full details, see the git log at: https://github.com/ksh93/ksh/tree/1.0
 
 Any uppercase BUG_* names are modernish shell bug IDs.
 
+2022-06-07:
+
+- Fixed a bug in 'typeset' where compound variables could acquire a spurious
+  -x (export) attribute when printing their values, triggering other bugs.
+
 2022-06-05:
 
 - Fixed a bug where tab completion would spuriously execute a command
