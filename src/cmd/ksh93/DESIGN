@@ -106,8 +106,7 @@ sh directory:
 	3.	array.c contains the code for indexed and associative
 		arrays.
 	4.	defs.c contains the data definitions for global symbols.
-	5.	deparse.c contains code to generate shell script from
-		a parse tree.
+	5.	(removed)
 	6.	expand.c contains code for file name expansion and
 		pathname expansion.
 	7.	fault.c contains code for signal processing, trap
