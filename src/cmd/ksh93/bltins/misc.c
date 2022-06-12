@@ -519,7 +519,7 @@ static void	print_times(struct timeval utime, struct timeval stime)
 	int st_min = stime.tv_sec / 60;
 	int st_sec = stime.tv_sec % 60;
 	int st_ms = stime.tv_usec / 1000;
-	sfprintf(sfstdout, "%dm%02d%c%03ds %dm%02d%c%03ds\n",
+	sfprintf(sfstdout, sh_isoption(SH_POSIX) ? "%dm%d%c%03ds %dm%d%c%03ds\n" : "%dm%02d%c%03ds %dm%02d%c%03ds\n",
 		ut_min, ut_sec, sh.radixpoint, ut_ms, st_min, st_sec, sh.radixpoint, st_ms);
 }
 #if _lib_getrusage

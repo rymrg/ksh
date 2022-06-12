@@ -3,6 +3,10 @@ For full details, see the git log at: https://github.com/ksh93/ksh/tree/1.0
 
 Any uppercase BUG_* names are modernish shell bug IDs.
 
+2022-06-12:
+
+- The POSIX mode now disables zero-padding of seconds in 'time'/'times' output.
+
 2022-06-09:
 
 - The POSIX mode has been amended to use a UNIX pipe(2) instead of a

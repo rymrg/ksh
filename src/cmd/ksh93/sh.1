@@ -2296,6 +2296,9 @@ hours if greater than zero,
 minutes, and seconds of the form \fIHH\fPh\fIMM\fPm\fISS\fP.\fIFF\fPs.
 The value of \fIp\fP determines whether or not the fraction is
 included.
+Seconds are zero-padded unless the
+.B posix
+shell option is on.
 .IP
 All other characters are output without change and a trailing
 newline is added.
@@ -7747,6 +7750,12 @@ enables the recognition of a leading zero as introducing an octal number in
 all arithmetic evaluation contexts, except in the \fBlet\fR built-in while
 \fBletoctal\fR is off;
 .IP \[bu]
+disables zero-padding of seconds in the output of the
+.B time
+and
+.B times
+built-ins;
+.IP \[bu]
 stops the \fB.\fR command (but not \fBsource\fR) from looking up functions
 defined with the \fBfunction\fR syntax;
 .IP \[bu]
@@ -7987,6 +7996,9 @@ or
 Displays the accumulated user and system CPU times, one line with the times
 used by the shell and another with those used by all of the shell's child
 processes. No options are supported.
+Seconds are zero-padded unless the
+.B posix
+shell option is on.
 .TP
 \(dg \f3trap\fP \*(OK \f3\-p\fP \*(CK \*(OK \f2action\^\fP \*(CK \*(OK \f2sig\^\fP \*(CK .\|.\|.
 The
