@@ -394,7 +394,7 @@ static int p_comarg(register struct comnod *com)
 		bp->ptr = nv_context(np);
 		bp->data = com->comstate;
 		bp->flags = SH_END_OPTIM;
-		((Shbltin_f)funptr(np))(0,(char**)0, bp);
+		(funptr(np))(0, NIL(char**), bp);
 		bp->ptr = save_ptr;
 		bp->data = save_data;
 	}
@@ -1046,7 +1046,7 @@ int sh_exec(register const Shnode_t *t, int flags)
 						else if(checkopt(com,'a'))
 							flgs |= NV_IARRAY;
 					}
-					if(np && np->nvalue.bfp==SYSTYPESET->nvalue.bfp)
+					if(np && funptr(np)==b_typeset)
 					{
 						/* command calls b_typeset(); treat as a typeset variant */
 						flgs |= NV_UNATTR;  /* unset previous attributes before assigning */
@@ -1297,7 +1297,7 @@ int sh_exec(register const Shnode_t *t, int flags)
 						error_info.id = *com;
 						if(argn)
 							sh.exitval = 0;
-						sh.bltinfun = (Shbltin_f)funptr(np);
+						sh.bltinfun = funptr(np);
 						bp->bnode = np;
 						bp->vnode = nq;
 						bp->ptr = nv_context(np);
@@ -3303,7 +3303,7 @@ int sh_fun(Namval_t *np, Namval_t *nq, char *argv[])
 			opt_info.index = opt_info.offset = 0;
 			opt_info.disc = 0;
 			sh.exitval = 0;
-			sh.exitval = ((Shbltin_f)funptr(np))(n,argv,bp);
+			sh.exitval = (funptr(np))(n,argv,bp);
 		}
 		sh_popcontext(buffp);
 		if(jmpval>SH_JMPCMD)
