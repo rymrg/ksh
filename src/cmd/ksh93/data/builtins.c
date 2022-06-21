@@ -125,7 +125,6 @@ const struct shtable3 shtab_builtins[] =
 	"pwd",		NV_BLTIN|BLT_ENV,		bltin(pwd),
 	"read",		NV_BLTIN|BLT_ENV,		bltin(read),
 	"sleep",	NV_BLTIN,			bltin(sleep),
-	"alarm",	NV_BLTIN|BLT_ENV,		bltin(alarm),
 	"times",	NV_BLTIN|BLT_ENV|BLT_SPC,	bltin(times),
 	"ulimit",	NV_BLTIN|BLT_ENV,		bltin(ulimit),
 	"umask",	NV_BLTIN|BLT_ENV,		bltin(umask),

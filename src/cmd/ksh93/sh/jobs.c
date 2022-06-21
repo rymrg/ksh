@@ -1527,8 +1527,6 @@ int	job_wait(register pid_t pid)
 			continue;
 		if(nochild)
 			break;
-		if(sh.sigflag[SIGALRM]&SH_SIGTRAP)
-			sh_timetraps();
 		if((intr && sh.trapnote) || (pid==1 && !intr))
 			break;
 	}

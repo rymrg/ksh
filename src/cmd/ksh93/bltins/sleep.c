@@ -129,8 +129,6 @@ skip:
 		if(tloc < (now=time(NIL(time_t*))))
 			break;
 		d = (double)(tloc-now);
-		if(sh.sigflag[SIGALRM]&SH_SIGTRAP)
-			sh_timetraps();
 	}
 	return(0);
 }

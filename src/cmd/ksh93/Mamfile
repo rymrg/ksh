@@ -218,18 +218,34 @@ make install
 		done pmain.o generated
 		make libshell.a archive
 			prev shell.req
-			make alarm.o
-				make bltins/alarm.c
-					make FEATURE/time implicit
-						make features/time
-						done features/time
-						exec - iffe ${IFFEFLAGS} -v -c "${CC} ${mam_cc_FLAGS} ${CCFLAGS} ${LDFLAGS}" ref ${mam_cc_L+-L.} ${mam_cc_L+-L${INSTALLROOT}/lib} -I${PACKAGE_ast_INCLUDE} -I${INSTALLROOT}/include ${mam_libdll} ${mam_libcmd} ${mam_libast} ${mam_libm} ${mam_libnsl} : run features/time
-						make ${PACKAGE_ast_INCLUDE}/times.h implicit
-							make ${PACKAGE_ast_INCLUDE}/ast_time.h implicit
-							done ${PACKAGE_ast_INCLUDE}/ast_time.h dontcare
+			make cd_pwd.o
+				make bltins/cd_pwd.c
+					make include/test.h implicit
+						prev include/shtable.h implicit
+						make include/defs.h implicit
+							make include/regress.h implicit
+							done include/regress.h dontcare
+							prev include/shtable.h implicit
+							prev include/shell.h implicit
+							prev ${PACKAGE_ast_INCLUDE}/endian.h implicit
+							prev include/name.h implicit
+							make include/argnod.h implicit
+								prev ${PACKAGE_ast_INCLUDE}/stak.h implicit
+							done include/argnod.h dontcare
+							prev ${PACKAGE_ast_INCLUDE}/cdt.h implicit
+							prev FEATURE/options implicit
+							prev ${PACKAGE_ast_INCLUDE}/error.h implicit
+							prev ${PACKAGE_ast_INCLUDE}/sfio.h implicit
 							prev ${PACKAGE_ast_INCLUDE}/ast.h implicit
-						done ${PACKAGE_ast_INCLUDE}/times.h dontcare
-					done FEATURE/time generated
+						done include/defs.h
+						prev FEATURE/options implicit
+					done include/test.h
+					make ${PACKAGE_ast_INCLUDE}/ls.h implicit
+						make ${PACKAGE_ast_INCLUDE}/ast_mode.h implicit
+						done ${PACKAGE_ast_INCLUDE}/ast_mode.h dontcare
+						prev ${PACKAGE_ast_INCLUDE}/ast_fs.h implicit
+						prev ${PACKAGE_ast_INCLUDE}/ast_std.h implicit
+					done ${PACKAGE_ast_INCLUDE}/ls.h
 					make include/builtins.h implicit
 						make include/shtable.h implicit
 						done include/shtable.h dontcare
@@ -246,44 +262,6 @@ make install
 						done FEATURE/options dontcare generated
 						prev ${PACKAGE_ast_INCLUDE}/option.h implicit
 					done include/builtins.h
-					prev ${PACKAGE_ast_INCLUDE}/stak.h implicit
-					prev ${PACKAGE_ast_INCLUDE}/error.h implicit
-					make include/defs.h implicit
-						make include/regress.h implicit
-						done include/regress.h dontcare
-						prev include/shtable.h implicit
-						prev include/shell.h implicit
-						prev ${PACKAGE_ast_INCLUDE}/endian.h implicit
-						prev include/name.h implicit
-						make include/argnod.h implicit
-							prev ${PACKAGE_ast_INCLUDE}/stak.h implicit
-						done include/argnod.h dontcare
-						prev ${PACKAGE_ast_INCLUDE}/cdt.h implicit
-						prev FEATURE/options implicit
-						prev FEATURE/externs implicit
-						prev ${PACKAGE_ast_INCLUDE}/error.h implicit
-						prev ${PACKAGE_ast_INCLUDE}/sfio.h implicit
-						prev ${PACKAGE_ast_INCLUDE}/ast.h implicit
-					done include/defs.h
-					prev shopt.h implicit
-				done bltins/alarm.c
-				prev bltins/alarm.c
-				exec - ${CC} ${mam_cc_FLAGS} ${CCFLAGS} -I. -Iinclude -I${PACKAGE_ast_INCLUDE} -D_API_ast=20100309 -D_PACKAGE_ast -DERROR_CONTEXT_T=Error_context_t -c bltins/alarm.c
-			done alarm.o generated
-			make cd_pwd.o
-				make bltins/cd_pwd.c
-					make include/test.h implicit
-						prev include/shtable.h implicit
-						prev include/defs.h implicit
-						prev FEATURE/options implicit
-					done include/test.h
-					make ${PACKAGE_ast_INCLUDE}/ls.h implicit
-						make ${PACKAGE_ast_INCLUDE}/ast_mode.h implicit
-						done ${PACKAGE_ast_INCLUDE}/ast_mode.h dontcare
-						prev ${PACKAGE_ast_INCLUDE}/ast_fs.h implicit
-						prev ${PACKAGE_ast_INCLUDE}/ast_std.h implicit
-					done ${PACKAGE_ast_INCLUDE}/ls.h
-					prev include/builtins.h implicit
 					prev include/name.h implicit
 					make include/path.h implicit
 						make FEATURE/acct implicit
@@ -383,7 +361,16 @@ make install
 			make misc.o
 				make bltins/misc.c
 					prev ${PACKAGE_ast_INCLUDE}/times.h implicit
-					prev FEATURE/time implicit
+					make FEATURE/time implicit
+						make features/time
+						done features/time
+						exec - iffe ${IFFEFLAGS} -v -c "${CC} ${mam_cc_FLAGS} ${CCFLAGS} ${LDFLAGS}" ref ${mam_cc_L+-L.} ${mam_cc_L+-L${INSTALLROOT}/lib} -I${PACKAGE_ast_INCLUDE} -I${INSTALLROOT}/include ${mam_libdll} ${mam_libcmd} ${mam_libast} ${mam_libm} ${mam_libnsl} : run features/time
+						make ${PACKAGE_ast_INCLUDE}/times.h implicit
+							make ${PACKAGE_ast_INCLUDE}/ast_time.h implicit
+							done ${PACKAGE_ast_INCLUDE}/ast_time.h dontcare
+							prev ${PACKAGE_ast_INCLUDE}/ast.h implicit
+						done ${PACKAGE_ast_INCLUDE}/times.h dontcare
+					done FEATURE/time generated
 					prev FEATURE/locale implicit
 					make include/jobs.h implicit
 						prev ${PACKAGE_ast_INCLUDE}/vmalloc.h implicit
@@ -1302,7 +1289,7 @@ make install
 				prev edit/hexpand.c
 				exec - ${CC} ${mam_cc_FLAGS} ${CCFLAGS} -I. -Iinclude -I${PACKAGE_ast_INCLUDE} -D_PACKAGE_ast -D_API_ast=20100309 -DERROR_CONTEXT_T=Error_context_t -c edit/hexpand.c
 			done hexpand.o generated
-			exec - ${AR} rc libshell.a alarm.o cd_pwd.o cflow.o enum.o getopts.o hist.o misc.o mkservice.o print.o read.o sleep.o trap.o test.o typeset.o ulimit.o umask.o whence.o main.o nvdisc.o nvtype.o arith.o args.o array.o completion.o defs.o edit.o expand.o regress.o fault.o fcin.o
+			exec - ${AR} rc libshell.a cd_pwd.o cflow.o enum.o getopts.o hist.o misc.o mkservice.o print.o read.o sleep.o trap.o test.o typeset.o ulimit.o umask.o whence.o main.o nvdisc.o nvtype.o arith.o args.o array.o completion.o defs.o edit.o expand.o regress.o fault.o fcin.o
 			exec - ${AR} rc libshell.a history.o init.o io.o jobs.o lex.o macro.o name.o nvtree.o parse.o path.o string.o streval.o subshell.o tdump.o timers.o trestore.o waitevent.o xec.o limits.o msg.o strdata.o testops.o keywords.o options.o signals.o aliases.o builtins.o variables.o lexstates.o emacs.o vi.o hexpand.o
 			exec - (ranlib libshell.a) >/dev/null 2>&1 || true
 		done libshell.a generated
