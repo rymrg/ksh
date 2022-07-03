@@ -209,7 +209,6 @@ struct sh_scoped
 	char		**otrap;
 	char		**trapcom;
 	char		**otrapcom;
-	void		*timetrap;
 	struct Ufunction *real_fun;	/* current 'function name' function */
 	int             repl_index;
 	char            *repl_arg;
