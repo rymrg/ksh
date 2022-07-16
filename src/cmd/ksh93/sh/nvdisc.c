@@ -154,16 +154,15 @@ void nv_putv(Namval_t *np, const char *value, int flags, register Namfun_t *nfp)
 	}
 }
 
-#define	LOOKUPS		0
+#define	LOOKUP		0
 #define	ASSIGN		1
 #define	APPEND		2
 #define	UNASSIGN	3
-#define	LOOKUPN		4
 
 struct	vardisc
 {
 	Namfun_t	fun;
-	Namval_t	*disc[5];
+	Namval_t	*disc[4];
 };
 
 struct blocked
@@ -290,8 +289,8 @@ static void	assign(Namval_t *np,const char* val,int flags,Namfun_t *handle)
 		savelex = *lexp;
 		sh_lexopen(lexp, 0);   /* needs full init (0), not what it calls reinit (1) */
 		block(bp,type);
-		if(bflag = (type==APPEND && !isblocked(bp,LOOKUPS)))
-			block(bp,LOOKUPS);
+		if(bflag = (type==APPEND && !isblocked(bp,LOOKUP)))
+			block(bp,LOOKUP);
 		sh_pushcontext(&checkpoint, 1);
 		jmpval = sigsetjmp(checkpoint.buff, 0);
 		if(!jmpval)
@@ -301,7 +300,7 @@ static void	assign(Namval_t *np,const char* val,int flags,Namfun_t *handle)
 			sh_iorestore(checkpoint.topfd, jmpval);
 		unblock(bp,type);
 		if(bflag)
-			unblock(bp,LOOKUPS);
+			unblock(bp,LOOKUP);
 		if(!vp->disc[type])
 			chktfree(np,vp);
 		*lexp = savelex;
@@ -378,15 +377,15 @@ done:
  * This function executes a lookup disc and then performs
  * the lookup on the given node <np>
  */
-static char*	lookup(Namval_t *np, int type, Sfdouble_t *dp,Namfun_t *handle)
+static char*	lookup(Namval_t *np, Namfun_t *handle)
 {
 	register struct vardisc	*vp = (struct vardisc*)handle;
 	struct blocked		block, *bp = block_info(np, &block);
-	register Namval_t	*nq = vp->disc[type];
+	register Namval_t	*nq = vp->disc[LOOKUP];
 	register char		*cp=0;
 	Namval_t		node;
 	union Value		*up = np->nvalue.up;
-	if(nq && !isblocked(bp,type))
+	if(nq && !isblocked(bp,LOOKUP))
 	{
 		struct checkpt	checkpoint;
 		int		jmpval;
@@ -401,12 +400,7 @@ static char*	lookup(Namval_t *np, int type, Sfdouble_t *dp,Namfun_t *handle)
 			nv_onattr(SH_VALNOD,NV_NOFREE);
 			_nv_unset(SH_VALNOD,0);
 		}
-		if(type==LOOKUPN)
-		{
-			nv_onattr(SH_VALNOD,NV_DOUBLE|NV_INTEGER);
-			nv_setsize(SH_VALNOD,10);
-		}
-		block(bp,type);
+		block(bp,LOOKUP);
 		block(bp, UNASSIGN);   /* make sure nv_setdisc doesn't invalidate 'vp' by freeing it */
 		sh_pushcontext(&checkpoint, 1);
 		jmpval = sigsetjmp(checkpoint.buff, 0);
@@ -416,15 +410,10 @@ static char*	lookup(Namval_t *np, int type, Sfdouble_t *dp,Namfun_t *handle)
 		if(sh.topfd != checkpoint.topfd)
 			sh_iorestore(checkpoint.topfd, jmpval);
 		unblock(bp,UNASSIGN);
-		unblock(bp,type);
-		if(!vp->disc[type])
+		unblock(bp,LOOKUP);
+		if(!vp->disc[LOOKUP])
 			chktfree(np,vp);
-		if(type==LOOKUPN)
-		{
-			cp = (char*)(SH_VALNOD->nvalue.cp);
-			*dp = nv_getnum(SH_VALNOD);
-		}
-		else if(cp = nv_getval(SH_VALNOD))
+		if(cp = nv_getval(SH_VALNOD))
 			cp = stkcopy(stkstd,cp);
 		_nv_unset(SH_VALNOD,NV_RDONLY);
 		if(!nv_isnull(&node))
@@ -438,12 +427,7 @@ static char*	lookup(Namval_t *np, int type, Sfdouble_t *dp,Namfun_t *handle)
 	if(nv_isarray(np))
 		np->nvalue.up = up;
 	if(!cp)
-	{
-		if(type==LOOKUPS)
-			cp = nv_getv(np,handle);
-		else
-			*dp = nv_getn(np,handle);
-	}
+		cp = nv_getv(np,handle);
 	if(bp== &block)
 		block_done(bp);
 	if(nq && nq->nvalue.rp && nq->nvalue.rp->running==1)
@@ -453,19 +437,6 @@ static char*	lookup(Namval_t *np, int type, Sfdouble_t *dp,Namfun_t *handle)
 	}
 	return(cp);
 }
-
-static char*	lookups(Namval_t *np, Namfun_t *handle)
-{
-	return(lookup(np,LOOKUPS,(Sfdouble_t*)0,handle));
-}
-
-static Sfdouble_t lookupn(Namval_t *np, Namfun_t *handle)
-{
-	Sfdouble_t	d;
-	lookup(np,LOOKUPN, &d ,handle);
-	return(d);
-}
-
 
 /*
  * Set disc on given <event> to <action>
@@ -561,10 +532,7 @@ char *nv_setdisc(register Namval_t* np,register const char *event,Namval_t *acti
 	else if(action && np!=SH_LEVELNOD)
 	{
 		Namdisc_t *dp = (Namdisc_t*)vp->fun.disc;
-		if(type==LOOKUPS)
-			dp->getval = lookups;
-		else if(type==LOOKUPN)
-			dp->getnum = lookupn;
+		dp->getval = lookup;
 		vp->disc[type] = action;
 	}
 	else

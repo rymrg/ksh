@@ -1369,14 +1369,6 @@ got=$("$SHELL" -c $'foo=baz; foo+=_foo "$SHELL" -c \'print $foo\'; print $foo')
 	"(expected $(printf %q "$exp"), got $(printf %q "$got"))"
 
 # ======
-# Crash when setting attribute after getn (numeric get) discipline
-# https://github.com/ksh93/ksh/issues/435#issuecomment-1148813866
-got=$("$SHELL" -c 'foo.getn() { .sh.value=2.3*4.5; }; typeset -F2 foo; typeset -p foo' 2>&1)
-exp='typeset -F 2 foo=10.35'
-[[ $got == "$exp" ]] || err_exit "Setting attribute after setting getn discipline fails" \
-	"(expected $(printf %q "$exp"), got $(printf %q "$got"))"
-
-# ======
 # As of 2022-07-12, the current scope is restored after changing .sh.level in a DEBUG trap
 exp=$'a: 2 CHILD\nb: 1 PARENT\nc: 2 CHILD\nd: 1 PARENT'
 function leveltest
