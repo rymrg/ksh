@@ -3,7 +3,11 @@ For full details, see the git log at: https://github.com/ksh93/ksh/tree/1.0
 
 Any uppercase BUG_* names are modernish shell bug IDs.
 
-2022-07-24:
+2022-07-25:
+
+- Release candidate: ksh 93u+m/1.0.0-rc.1.
+
+2722-07-24:
 
 - Add new 'man' function in src/cmd/ksh93/fun/man. This integrates the --man
   self-documentation of ksh built-in and external AST commands with your

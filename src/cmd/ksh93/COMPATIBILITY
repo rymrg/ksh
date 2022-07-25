@@ -1,4 +1,4 @@
-		ksh 93u+m vs. ksh 93u+
+		ksh 93u+m/1.0.0 vs. ksh 93u+
 
 The following is a list of changes between ksh 93u+ 2012-08-01 and the new
 ksh 93u+m reboot that could cause incompatibilities in rare corner cases.
