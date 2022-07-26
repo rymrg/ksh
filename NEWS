@@ -3,6 +3,15 @@ For full details, see the git log at: https://github.com/ksh93/ksh/tree/1.0
 
 Any uppercase BUG_* names are modernish shell bug IDs.
 
+2022-07-26:
+
+- Fixed incorrect handling of initial zeros in test/[ and [[ arithmetic
+  comparison operators. For example, [[ 0x0A -eq 10 ]] yielded false but
+  [[ 1+0x0A -eq 11 ]] yielded true.
+
+- Fixed comparing long floating point (typeset -lF) values in test/[ and [[;
+  the values were reduced to standard floating point before comparing.
+
 2022-07-25:
 
 - Release candidate: ksh 93u+m/1.0.0-rc.1.
