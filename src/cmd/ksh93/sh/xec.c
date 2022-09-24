@@ -1227,6 +1227,7 @@ int sh_exec(register const Shnode_t *t, int flags)
 						if(argp)
 						{
 							scope++;
+							sh.invoc_local++;
 							sh_scope(argp,0);
 						}
 						opt_info.index = opt_info.offset = 0;
@@ -1303,7 +1304,10 @@ int sh_exec(register const Shnode_t *t, int flags)
 					if(buffp->olist)
 						free_list(buffp->olist);
 					if(scope)
+					{
 						sh_unscope();
+						sh.invoc_local--;
+					}
 					bp->ptr = (void*)save_ptr;
 					bp->data = (void*)save_data;
 					sh.redir0 = 0;
@@ -1322,6 +1326,7 @@ int sh_exec(register const Shnode_t *t, int flags)
 				if(!command && np && nv_isattr(np,NV_FUNCTION))
 				{
 					volatile int indx;
+					volatile char scope = 0;
 					struct checkpt *buffp = (struct checkpt*)stkalloc(sh.stk,sizeof(struct checkpt));
 #if SHOPT_NAMESPACE
 					Namval_t node, *namespace=0;
@@ -1379,6 +1384,11 @@ int sh_exec(register const Shnode_t *t, int flags)
 					}
 					if(jmpval == 0)
 					{
+						if(argp)
+						{
+							sh.invoc_local++;
+							scope++;
+						}
 						if(io)
 							indx = sh_redirect(io,execflg);
 #if SHOPT_NAMESPACE
@@ -1406,6 +1416,8 @@ int sh_exec(register const Shnode_t *t, int flags)
 						sh_popcontext(buffp);
 						sh_iorestore(indx,jmpval);
 					}
+					if(scope)
+						sh.invoc_local--;
 					if(nq)
 						unset_instance(nq,&node,&nr,mode);
 					sh_funstaks(slp->slchild,-1);
@@ -2995,6 +3007,7 @@ int sh_funscope(int argn, char *argv[],int(*fun)(void*),void *arg,int execflg)
 	int			isig,jmpval;
 	volatile int		r = 0;
 	int			n;
+	char			save_invoc_local;
 	char 			**savsig, *save_debugtrap = 0;
 	struct funenv		*fp = 0;
 	struct checkpt	*buffp = (struct checkpt*)stkalloc(sh.stk,sizeof(struct checkpt));
@@ -3075,6 +3088,8 @@ int sh_funscope(int argn, char *argv[],int(*fun)(void*),void *arg,int execflg)
 		nv_putval(SH_PATHNAMENOD,sh.st.filename,NV_NOFREE);
 		nv_putval(SH_FUNNAMENOD,sh.st.funname,NV_NOFREE);
 	}
+	save_invoc_local = sh.invoc_local;
+	sh.invoc_local = 0;
 	jmpval = sigsetjmp(buffp->buff,0);
 	if(jmpval == 0)
 	{
@@ -3109,6 +3124,7 @@ int sh_funscope(int argn, char *argv[],int(*fun)(void*),void *arg,int execflg)
 			r = sh.exitval;
 		}
 	}
+	sh.invoc_local = save_invoc_local;
 	sh.fn_depth--;
 	update_sh_level();
 	if(sh.fn_depth==1 && jmpval==SH_JMPERRFN)
@@ -3365,6 +3381,7 @@ static pid_t sh_ntfork(const Shnode_t *t,char *argv[],int *jobid,int topfd)
 		if(t->com.comset)
 		{
 			scope++;
+			sh.invoc_local++;
 			sh_scope(t->com.comset,0);
 		}
 		if(!strchr(path=argv[0],'/')) 
@@ -3507,6 +3524,7 @@ static pid_t sh_ntfork(const Shnode_t *t,char *argv[],int *jobid,int topfd)
 	if(scope)
 	{
 		sh_unscope();
+		sh.invoc_local--;
 		if(jmpval==SH_JMPSCRIPT)
 			nv_setlist(t->com.comset,NV_EXPORT|NV_IDENT|NV_ASSIGN,0);
 	}
