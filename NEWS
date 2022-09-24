@@ -2,6 +2,11 @@ This documents significant changes in the 1.0 branch of ksh 93u+m.
 For full details, see the git log at: https://github.com/ksh93/ksh/tree/1.0
 Uppercase BUG_* IDs are shell bug IDs as used by the Modernish shell library.
 
+2022-09-24:
+
+- In the emacs line editor, the Ctrl+R reverse-search prompt is now visually
+  distinct from a literal control character ("^R: " instead of "^R").
+
 2022-09-11:
 
 - Fixed a bug introduced in ksh93u+ 2012-04-23 that caused LINENO to have the
