@@ -1217,28 +1217,6 @@ function test_usage
 }; test_usage
 
 # ======
-# The 'alarm' builtin could make 'read' crash due to IFS table corruption caused by unsafe asynchronous execution.
-# https://bugzilla.redhat.com/1176670
-if	(builtin alarm) 2>/dev/null
-then	got=$( { "$SHELL" -c '
-		builtin alarm
-		alarm -r alarm_handler +.005
-		i=0
-		function alarm_handler.alarm
-		{
-			let "(++i) > 20" && exit
-		}
-		while :; do
-			echo cargo,odds and ends,jetsam,junk,wreckage,castoffs,sea-drift
-		done | while IFS="," read arg1 arg2 arg3 arg4 junk; do
-			:
-		done
-	'; } 2>&1)
-	((!(e = $?))) || err_exit 'crash with alarm and IFS' \
-		"(got status $e$( ((e>128)) && print -n /SIG && kill -l "$e"), $(printf %q "$got"))"
-fi
-
-# ======
 # Verify that the POSIX 'test' builtin exits with status 2 when given an invalid binary operator.
 for operator in '===' ']]'
 do
@@ -1591,8 +1569,7 @@ let Errors+=$?
 # Most built-ins should handle --version
 while IFS= read -r bltin <&3
 do	case $bltin in
-	# TODO: remove 'alarm' below when it's properly self-documented
-	alarm | echo | test | true | false | \[ | : | catclose | catgets | catopen | Dt* | _Dt* | X* | login | newgrp )
+	echo | test | true | false | \[ | : | catclose | catgets | catopen | Dt* | _Dt* | X* | login | newgrp )
 		continue ;;
 	esac
 	got=$({ "$bltin" --version; } 2>&1)  # the extra { } are needed for 'redirect'
