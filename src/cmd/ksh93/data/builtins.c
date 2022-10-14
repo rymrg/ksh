@@ -597,7 +597,7 @@ const char sh_optcommand[] =
 ;
 
 const char sh_optdot[]	 =
-"[-1c?@(#)$Id: \b.\b (ksh 93u+m) 2020-06-15 $\n]"
+"[-1c?\n@(#)$Id: \b.\b (ksh 93u+m) 2020-06-15 $\n]"
 "[--catalog?" SH_DICT "]"
 "[+NAME?\f?\f - execute commands in the current environment]"
 "[+DESCRIPTION?\b.\b and \bsource\b are built-in commands that execute "
@@ -899,7 +899,7 @@ const char sh_optgetopts[] =
 ;
 
 const char sh_optbg[] =
-"[-1c?@(#)$Id: bg (AT&T Research) 2000-04-02 $\n]"
+"[-1c?\n@(#)$Id: bg (AT&T Research) 2000-04-02 $\n]"
 "[--catalog?" SH_DICT "]"
 "[+NAME?bg - resume jobs in the background]"
 "[+DESCRIPTION?\bbg\b places the given \ajob\as into the background "
@@ -920,7 +920,7 @@ _JOB_
 ;
 
 const char sh_optfg[] =
-"[-1c?@(#)$Id: fg (AT&T Research) 2000-04-02 $\n]"
+"[-1c?\n@(#)$Id: fg (AT&T Research) 2000-04-02 $\n]"
 "[--catalog?" SH_DICT "]"
 "[+NAME?fg - move jobs to the foreground]"
 "[+DESCRIPTION?\bfg\b places the given \ajob\as into the foreground "
@@ -941,7 +941,7 @@ _JOB_
 ;
 
 const char sh_optdisown[] =
-"[-1c?@(#)$Id: disown (AT&T Research) 2000-04-02 $\n]"
+"[-1c?\n@(#)$Id: disown (AT&T Research) 2000-04-02 $\n]"
 "[--catalog?" SH_DICT "]"
 "[+NAME?disown - disassociate a job with the current shell]"
 "[+DESCRIPTION?\bdisown\b prevents the current shell from sending "
@@ -962,7 +962,7 @@ _JOB_
 ;
 
 const char sh_optjobs[] =
-"[-1c?@(#)$Id: jobs (AT&T Research) 2000-04-02 $\n]"
+"[-1c?\n@(#)$Id: jobs (AT&T Research) 2000-04-02 $\n]"
 "[--catalog?" SH_DICT "]"
 "[+NAME?jobs - display status of jobs]"
 "[+DESCRIPTION?\bjobs\b displays information about specified \ajob\as "
@@ -1013,7 +1013,7 @@ const char sh_opthash[] =
 ;
 
 const char sh_opthist[]	= 
-"[-1cn?@(#)$Id: hist (AT&T Research) 2000-04-02 $\n]"
+"[-1cn?\n@(#)$Id: hist (AT&T Research) 2000-04-02 $\n]"
 "[--catalog?" SH_DICT "]"
 "[+NAME?\f?\f - process command history list]"
 "[+DESCRIPTION?\b\f?\f\b lists, edits, or re-executes, commands  "
@@ -1170,7 +1170,7 @@ const char sh_optsuspend[] =
 #endif /* defined(JOBS) && defined(SIGSTOP) */
 
 const char sh_optlet[]	=
-"[-1c?@(#)$Id: let (AT&T Research) 2000-04-02 $\n]"
+"[-1c?\n@(#)$Id: let (AT&T Research) 2000-04-02 $\n]"
 "[--catalog?" SH_DICT "]"
 "[+NAME?let - evaluate arithmetic expressions]"
 "[+DESCRIPTION?\blet\b evaluates each \aexpr\a in the current "
@@ -1961,7 +1961,7 @@ const char sh_opttypeset[] =
 
 #ifndef _no_ulimit
 const char sh_optulimit[] =
-"[-1c?@(#)$Id: ulimit (ksh 93u+m) 2022-10-13 $\n]"
+"[-1c?\n@(#)$Id: ulimit (ksh 93u+m) 2022-10-13 $\n]"
 "[--catalog?" SH_DICT "]"
 "[+NAME?ulimit - set or display resource limits]"
 "[+DESCRIPTION?\bulimit\b sets or displays resource limits.  These "
@@ -1998,7 +1998,7 @@ const char sh_optulimit[] =
 #endif /* !_no_ulimit */
 
 const char sh_opttimes[] =
-"[-1c?@(#)$Id: times (ksh 93u+m) 2020-07-14 $\n]"
+"[-1c?\n@(#)$Id: times (ksh 93u+m) 2020-07-14 $\n]"
 "[--catalog?" SH_DICT "]"
 "[+NAME?times - display CPU usage by the shell and child processes]"
 "[+DESCRIPTION?\btimes\b displays the accumulated user and system CPU times, "
