@@ -63,8 +63,8 @@ fi
 # Furthermore, the posix option is automatically turned on upon invocation if the shell is invoked as sh or rsh,
 # or if -o posix or --posix is specified on the shell invocation command line, or when executing scripts
 # without a #! path with this option active in the invoking shell.
-# In that case, the invoked shell will not set the preset aliases even if interactive, and will not import
-# type attributes for variables (such as integer or left/right justify) from the environment.
+# In that case, the invoked shell will not import type attributes for variables
+# (such as integer or left/right justify) from the environment.
 set --noposix
 ln -s "$SHELL" sh
 ln -s "$SHELL" rsh
