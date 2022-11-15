@@ -107,10 +107,6 @@ make install
 		exec - 0) cp package.sh package
 		exec - ;;
 		exec - *) {
-		exec - i=`(read x; echo $x) < package.sh`
-		exec - case $i in
-		exec - '#!'*|*'||'*|':'*|'":"'*|"':'"*) echo "$i" ;;
-		exec - esac
 		exec - cat package.sh
 		exec - } > package
 		exec - ;;
